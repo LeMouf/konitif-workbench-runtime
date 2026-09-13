@@ -1,60 +1,63 @@
 # @konitif/workbench-runtime
 
-Public runtime orchestration for a KONITIF Workbench. It connects Workbench contracts to reactive application state without owning product semantics.
+Reactive Svelte host adapter for assembling public KONITIF Workbench contracts
+with explicit runtime ports.
 
-Products compose this runtime and provide their own tools, widgets, persistence adapters and policies.
+## Installation
 
-## Autonomous distribution
-
-Run `npm run build`, `npm test` and `npm run verify:package` from this
-repository. The build emits ESM and declarations into `dist`; the verifier
-packs that compiled allowlist, checks its exact contents and consumes both
-public entries outside the source tree. No lifecycle script performs an
-installation or publication.
-
-The package depends on the published Workbench authority rather than a workspace
-locator. Only the archive retained by the release verifier may be published.
-
-## Explicit runtime entry
-
-```ts
-import {
-  createWorkbenchStoreRuntime,
-  type CreateWorkbenchStoreRuntimeOptions,
-} from '@konitif/workbench-runtime/runtime';
+```sh
+npm install @konitif/workbench-runtime
 ```
 
-This entry requires all six host ports: `workspacePersistence`,
-`shellPersistence`, `focusPersistence`, `workspaceSync`, `hostEvents` and
-`detachedWindows`. Only the last two accept `null`, explicitly disabling those
-capabilities. Missing ports are rejected before providers are read.
+## What it provides
 
-Port types are exported from the same entry. Workspace contracts remain owned
-by `@konitif/workbench/workspace-contracts`. The runtime owns its subscriptions,
-not the supplied shared providers; call `flushPersistence()` before `dispose()`
-if pending state must be saved. Disposal does not close native windows.
+- Reactive Workbench stores and shell actions.
+- Workspace history and synchronization controllers.
+- Explicit ports for persistence, host events and detached windows.
+- A runtime assembly entry that selects no browser providers by default.
 
-The root entry retains `createWorkbenchStore` and its browser defaults for
-compatibility. The explicit entry selects no browser defaults, but still uses
-Svelte stores, global debounce timers and the existing identity generator.
+## Authority boundary
 
-The npm distribution exposes compiled Node-compatible ESM and NodeNext
-declarations. Repository sources remain TypeScript and are not included in the
-archive.
+This package adapts Workbench authorities; it does not redefine workspace
+semantics or own product tools, widgets, Viewers or policies. Supplied providers
+remain owned by their hosts. Runtime disposal removes subscriptions but does not
+implicitly flush persistence or close shared native resources.
 
-## Host notifications
+## Quick start
 
-`createWorkbenchStore` accepts an optional `hostEvents` provider:
+```ts
+import { createWorkbenchStore } from '@konitif/workbench-runtime';
 
-- Omitted: browser `pagehide`, `beforeunload`, hidden visibility and `storage` notifications.
-- `null`: no subscriptions to those host events, even in a browser.
-- `WorkbenchHostEvents`: explicit provider returning an unsubscribe function for each subscription.
+const emptyCatalog = { getDefinition: () => undefined };
+const runtime = createWorkbenchStore({
+  initialToolId: 'home',
+  persistenceKey: 'example-workbench',
+  toolCatalog: emptyCatalog,
+  shellWidgetCatalog: emptyCatalog,
+});
 
-The provider calls `onPersistenceBoundary()` or `onStorageChange({ key, newValue })`.
-It does not own workspace state or perform persistence. The coordinator filters
-storage notifications, reloads through its persistence ports and validates the
-workspace. Disposal unsubscribes without destroying a shared provider; it does
-not implicitly flush pending saves. Call `flushPersistence()` first when needed.
+runtime.dispose();
+```
 
-This option does not disable `workspaceSync`, detached-window controls or default
-storage adapters. Supply those ports separately for a non-browser host.
+The root entry supplies browser-oriented defaults. Import
+`@konitif/workbench-runtime/runtime` when persistence, synchronization, host
+events and detached-window providers must all be supplied explicitly. Call
+`flushPersistence()` before `dispose()` when pending state must be saved.
+
+## Public entry points
+
+| Entry | Purpose |
+| --- | --- |
+| `@konitif/workbench-runtime` | Existing store API and compatibility defaults. |
+| `@konitif/workbench-runtime/runtime` | Explicit six-port runtime assembly. |
+
+## Reference
+
+See [`reference/`](reference/) for the machine-readable capability catalog and
+authority diagrams. The catalogs document the adapter and are not persisted
+workspace state.
+
+## License
+
+Source-available under [PolyForm Noncommercial 1.0.0](LICENSE.md), not OSI open
+source. Commercial use requires separate written authorization.

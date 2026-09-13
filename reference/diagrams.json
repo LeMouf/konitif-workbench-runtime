@@ -4,40 +4,40 @@
   "diagrams": [
     {
       "id": "runtime-session-lifecycle",
-      "title": "Cycle d'une session Workbench",
+      "title": "Workbench session lifecycle",
       "kind": "lifecycle",
-      "summary": "Le runtime initialise le store, coordonne les actions puis préserve une reprise idempotente.",
+      "summary": "The runtime initializes the store, coordinates actions, and preserves idempotent recovery.",
       "nodes": [
         {
           "id": "boot",
           "label": "Boot",
-          "description": "Configuration, registres et dépendances sont préparés."
+          "description": "Configuration, registries, and dependencies are prepared."
         },
         {
           "id": "store",
-          "label": "Store Workbench",
-          "description": "L'état composite de la session est créé."
+          "label": "Workbench store",
+          "description": "The composite session state is created."
         },
         {
           "id": "action",
-          "label": "Action admise",
-          "description": "Shell, mode ou outil reçoit une intention."
+          "label": "Admitted action",
+          "description": "The shell, a mode, or a tool receives an intent."
         },
         {
           "id": "runtime",
           "label": "Coordination",
-          "description": "Les contrôleurs appliquent la transition.",
+          "description": "Controllers apply the transition.",
           "tone": "runtime"
         },
         {
           "id": "persist",
-          "label": "Persistance et sync",
-          "description": "Disposition, focus et historique sont capturés."
+          "label": "Persistence and synchronization",
+          "description": "Layout, focus, and history are captured."
         },
         {
           "id": "resume",
-          "label": "Reprise",
-          "description": "La session est réhydratée sans duplication.",
+          "label": "Recovery",
+          "description": "The session is rehydrated without duplication.",
           "tone": "observation"
         }
       ],
@@ -63,7 +63,7 @@
           "to": "resume"
         }
       ],
-      "caption": "Le runtime Workbench coordonne les domaines hébergés sans inventer leur signification produit."
+      "caption": "The Workbench runtime coordinates hosted domains without inventing their product meaning."
     }
   ]
 }

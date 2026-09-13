@@ -32,7 +32,8 @@
     "dist",
     "LICENSE.md",
     "README.md",
-    "package.json"
+    "package.json",
+    "reference"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
