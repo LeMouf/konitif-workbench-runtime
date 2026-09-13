@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "package": "@konitif/workbench-runtime",
+  "diagrams": [
+    {
+      "id": "runtime-session-lifecycle",
+      "title": "Cycle d'une session Workbench",
+      "kind": "lifecycle",
+      "summary": "Le runtime initialise le store, coordonne les actions puis préserve une reprise idempotente.",
+      "nodes": [
+        {
+          "id": "boot",
+          "label": "Boot",
+          "description": "Configuration, registres et dépendances sont préparés."
+        },
+        {
+          "id": "store",
+          "label": "Store Workbench",
+          "description": "L'état composite de la session est créé."
+        },
+        {
+          "id": "action",
+          "label": "Action admise",
+          "description": "Shell, mode ou outil reçoit une intention."
+        },
+        {
+          "id": "runtime",
+          "label": "Coordination",
+          "description": "Les contrôleurs appliquent la transition.",
+          "tone": "runtime"
+        },
+        {
+          "id": "persist",
+          "label": "Persistance et sync",
+          "description": "Disposition, focus et historique sont capturés."
+        },
+        {
+          "id": "resume",
+          "label": "Reprise",
+          "description": "La session est réhydratée sans duplication.",
+          "tone": "observation"
+        }
+      ],
+      "edges": [
+        {
+          "from": "boot",
+          "to": "store"
+        },
+        {
+          "from": "store",
+          "to": "action"
+        },
+        {
+          "from": "action",
+          "to": "runtime"
+        },
+        {
+          "from": "runtime",
+          "to": "persist"
+        },
+        {
+          "from": "persist",
+          "to": "resume"
+        }
+      ],
+      "caption": "Le runtime Workbench coordonne les domaines hébergés sans inventer leur signification produit."
+    }
+  ]
+}

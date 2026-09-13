@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0.0",
+  "package": "@konitif/workbench-runtime",
+  "intent": "Assembler le runtime du Workbench et coordonner ses contrôleurs sans posséder les domaines hébergés.",
+  "clusters": [
+    {
+      "id": "store-and-modes",
+      "title": "Store et modes",
+      "summary": "État composite du Workbench et modes de manipulation du workspace.",
+      "authority": "Coordination applicative locale.",
+      "owns": [
+        "store",
+        "mode courant"
+      ],
+      "doesNotOwn": [
+        "domaines outils"
+      ],
+      "workflow": [
+        "Créer",
+        "Configurer",
+        "Réduire"
+      ],
+      "sources": [
+        "createWorkbenchStore.ts",
+        "createWorkspaceModeController.ts"
+      ]
+    },
+    {
+      "id": "shell-runtime-actions",
+      "title": "Actions shell et outils",
+      "summary": "Commandes applicatives reliant shell, panels et outils.",
+      "authority": "Orchestration des intentions admises.",
+      "owns": [
+        "actions shell",
+        "actions runtime outil"
+      ],
+      "doesNotOwn": [
+        "sens métier"
+      ],
+      "workflow": [
+        "Recevoir",
+        "Router",
+        "Appliquer"
+      ],
+      "sources": [
+        "workbenchShellActions.ts",
+        "workbenchToolRuntimeActions.ts"
+      ]
+    },
+    {
+      "id": "persistence-and-sync",
+      "title": "Persistance et synchronisation",
+      "summary": "Reprise de la disposition, du focus et de l'historique.",
+      "authority": "État de workspace persistant.",
+      "owns": [
+        "shell persisté",
+        "focus",
+        "historique",
+        "sync"
+      ],
+      "doesNotOwn": [
+        "artefacts domaine"
+      ],
+      "workflow": [
+        "Capturer",
+        "Persister",
+        "Réhydrater"
+      ],
+      "sources": [
+        "workbenchShellPersistence.ts",
+        "workbenchFocusPersistence.ts",
+        "workspaceHistoryController.ts",
+        "workspaceSyncController.ts"
+      ]
+    }
+  ]
+}

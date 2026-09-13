@@ -1,0 +1,49 @@
+{
+  "name": "@konitif/workbench-runtime",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "version": "0.284.1",
+  "description": "Reactive Svelte host adapter for KONITIF Workbench contracts with explicit runtime ports.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeMouf/konitif-workbench-runtime.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "svelte": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime.d.ts",
+      "import": "./dist/runtime.js",
+      "default": "./dist/runtime.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE.md",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify:package": "node scripts/verify-package.mjs"
+  },
+  "dependencies": {
+    "@konitif/workbench": "0.284.1",
+    "svelte": "^4.2.18"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

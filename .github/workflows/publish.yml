@@ -1,0 +1,46 @@
+name: Publish Workbench Runtime
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing v* tag selected as the workflow ref
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  publish:
+    if: vars.WORKBENCH_RUNTIME_NPM_PUBLISH_ENABLED == 'true' && github.repository == 'LeMouf/konitif-workbench-runtime'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: npm-release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - run: bash scripts/select-ci-runtime.sh
+      - name: Require the exact release tag
+        env:
+          WORKBENCH_RUNTIME_RELEASE_TAG: ${{ github.event.inputs.release_tag || '' }}
+        run: |
+          expected="v$(node -p "require('./package.json').version")"
+          test "${GITHUB_REF}" = "refs/tags/${expected}"
+          if test "${GITHUB_EVENT_NAME}" = "workflow_dispatch"; then
+            test "${WORKBENCH_RUNTIME_RELEASE_TAG}" = "${expected}"
+          fi
+      - run: npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - run: npm run build
+      - run: npm test
+      - name: Validate release identity and publishing tools
+        env:
+          WORKBENCH_RUNTIME_RELEASE_TAG: ${{ github.event.inputs.release_tag || '' }}
+        run: node scripts/check-release.mjs
+      - name: Retain the verified archive
+        run: node scripts/prepare-release-archive.mjs
+      - name: Publish verified archive through npm OIDC
+        run: npm publish .release/package.tgz --access public --provenance --ignore-scripts --registry=https://registry.npmjs.org
