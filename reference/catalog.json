@@ -1,24 +1,24 @@
 {
   "schemaVersion": "1.0.0",
   "package": "@konitif/workbench-runtime",
-  "intent": "Assembler le runtime du Workbench et coordonner ses contrôleurs sans posséder les domaines hébergés.",
+  "intent": "Assemble the Workbench runtime and coordinate its controllers without owning the hosted domains.",
   "clusters": [
     {
       "id": "store-and-modes",
-      "title": "Store et modes",
-      "summary": "État composite du Workbench et modes de manipulation du workspace.",
-      "authority": "Coordination applicative locale.",
+      "title": "Store and modes",
+      "summary": "Composite Workbench state and workspace manipulation modes.",
+      "authority": "Local application coordination.",
       "owns": [
         "store",
-        "mode courant"
+        "current mode"
       ],
       "doesNotOwn": [
-        "domaines outils"
+        "tool domains"
       ],
       "workflow": [
-        "Créer",
-        "Configurer",
-        "Réduire"
+        "Create",
+        "Configure",
+        "Reduce"
       ],
       "sources": [
         "createWorkbenchStore.ts",
@@ -27,20 +27,20 @@
     },
     {
       "id": "shell-runtime-actions",
-      "title": "Actions shell et outils",
-      "summary": "Commandes applicatives reliant shell, panels et outils.",
-      "authority": "Orchestration des intentions admises.",
+      "title": "Shell and tool actions",
+      "summary": "Application commands connecting the shell, panels, and tools.",
+      "authority": "Orchestration of admitted intents.",
       "owns": [
-        "actions shell",
-        "actions runtime outil"
+        "shell actions",
+        "tool runtime actions"
       ],
       "doesNotOwn": [
-        "sens métier"
+        "business meaning"
       ],
       "workflow": [
-        "Recevoir",
-        "Router",
-        "Appliquer"
+        "Receive",
+        "Route",
+        "Apply"
       ],
       "sources": [
         "workbenchShellActions.ts",
@@ -49,22 +49,22 @@
     },
     {
       "id": "persistence-and-sync",
-      "title": "Persistance et synchronisation",
-      "summary": "Reprise de la disposition, du focus et de l'historique.",
-      "authority": "État de workspace persistant.",
+      "title": "Persistence and synchronization",
+      "summary": "Restoration of layout, focus, and history.",
+      "authority": "Persistent workspace state.",
       "owns": [
-        "shell persisté",
+        "persisted shell",
         "focus",
-        "historique",
-        "sync"
+        "history",
+        "synchronization"
       ],
       "doesNotOwn": [
-        "artefacts domaine"
+        "domain artifacts"
       ],
       "workflow": [
-        "Capturer",
-        "Persister",
-        "Réhydrater"
+        "Capture",
+        "Persist",
+        "Rehydrate"
       ],
       "sources": [
         "workbenchShellPersistence.ts",
