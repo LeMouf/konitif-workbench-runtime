@@ -2,10 +2,11 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
 test('every emitted relative specifier targets explicit JavaScript', () => {
-  const root = new URL('../dist/', import.meta.url).pathname;
+  const root = fileURLToPath(new URL('../dist/', import.meta.url));
   const files = [];
   function walk(directory) {
     for (const entry of readdirSync(directory, { withFileTypes: true })) {

@@ -15,6 +15,9 @@ test('manifest is public, compiled and independent from workspace locators', () 
     '@konitif/workbench': '0.284.1',
     svelte: '^4.2.18',
   });
+  assert.equal(manifest.svelte, './dist/index.js');
+  assert.equal(manifest.exports['.'].svelte, './dist/index.js');
+  assert.equal(manifest.exports['./runtime'].svelte, undefined);
   for (const field of ['dependencies', 'optionalDependencies', 'peerDependencies']) {
     for (const version of Object.values(manifest[field] ?? {})) {
       assert.doesNotMatch(version, /^(?:workspace:|file:|link:|\.\.?[\\/])/);
