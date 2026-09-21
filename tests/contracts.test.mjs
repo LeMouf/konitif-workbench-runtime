@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { get } from 'svelte/store';
 import { createWorkspace } from '@konitif/workbench/workspace-contracts';
-import { createWorkbenchStore } from '../dist/index.js';
-import { createWorkbenchStoreRuntime } from '../dist/runtime.js';
+import { createWorkbenchStore, createCoherentWorkbenchStore } from '../dist/index.js';
+import { createWorkbenchStoreRuntime, restoreCoherentWorkbenchUsage } from '../dist/runtime.js';
 
 test('strict runtime uses explicit ports and preserves the Workbench authority', () => {
   assert.equal(typeof createWorkbenchStore, 'function');
@@ -36,4 +36,9 @@ test('strict runtime uses explicit ports and preserves the Workbench authority',
 
 test('strict runtime rejects a missing required host port', () => {
   assert.throws(() => createWorkbenchStoreRuntime({}), /required/i);
+});
+
+test('coherent persistence is exposed by both public entries', () => {
+  assert.equal(typeof createCoherentWorkbenchStore, 'function');
+  assert.equal(typeof restoreCoherentWorkbenchUsage, 'function');
 });

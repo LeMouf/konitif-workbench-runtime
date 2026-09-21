@@ -50,6 +50,10 @@ export interface CreateWorkbenchStoreRuntimeOptions {
   initialStackHeaderVisible?: boolean;
   defaultOpenShellRegions?: ShellRegionId[];
   persistenceEnabled?: () => boolean;
+  coherentPersistence?: {
+    initialState: import('./workbenchPersistenceRuntime').WorkbenchPersistenceState;
+    coordinator: import('./workbenchPersistenceRuntime').WorkbenchPersistenceCoordinator<WorkbenchState>;
+  };
 }
 
 export function createWorkbenchStoreRuntime(options: CreateWorkbenchStoreRuntimeOptions) {
@@ -81,19 +85,19 @@ export function createWorkbenchStoreRuntime(options: CreateWorkbenchStoreRuntime
   });
   const { createInitialWorkspace, createShellFallback, createWorkbenchState } = stateFactory;
 
-  const initialWorkspace = isPersistenceEnabled()
+  const initialWorkspace = options.coherentPersistence?.initialState.workspace ?? (isPersistenceEnabled()
     ? (persistence.load() ?? createWorkbenchState().workspace)
-    : createWorkbenchState().workspace;
-  const initialShell = shellPersistence.load(createShellFallback());
+    : createWorkbenchState().workspace);
+  const initialShell = options.coherentPersistence?.initialState.shell ?? shellPersistence.load(createShellFallback());
   const fallbackSession = createWorkspaceSessionState(initialWorkspace);
-  const initialFocus = focusPersistence.load(initialWorkspace, fallbackSession.focus);
+  const initialFocus = options.coherentPersistence?.initialState.focus ?? focusPersistence.load(initialWorkspace, fallbackSession.focus);
   const internalWorkspaceStore = writable(
     createWorkbenchState(createWorkspaceSessionState(initialWorkspace, initialFocus), initialShell)
   );
   const toolRuntimeUi = createWorkbenchToolRuntimeUiStore(() => get(internalWorkspaceStore).workspace);
   const historyRuntime = createWorkbenchHistoryRuntime<WorkbenchState>();
 
-  const persistenceCoordinator = createWorkbenchPersistenceRuntime({
+  const persistenceCoordinator = options.coherentPersistence?.coordinator ?? createWorkbenchPersistenceRuntime({
     persistenceKey: options.persistenceKey,
     shellPersistenceKey,
     focusPersistenceKey,
@@ -167,6 +171,7 @@ export function createWorkbenchStoreRuntime(options: CreateWorkbenchStoreRuntime
       case 'open-tool':
       case 'open-tool-in-panel':
       case 'open-tool-in-new-tab':
+      case 'unassign-tool':
       case 'split-panel-horizontal':
       case 'split-panel-vertical':
       case 'split-panel-to-side':

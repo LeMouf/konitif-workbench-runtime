@@ -4,6 +4,7 @@ import {
   moveShellWidgetToRegion,
   removeShellWidgetFromRegion,
   setShellRegionArrangement,
+  setShellRegionWidgetProportions,
   setShellRegionOpen,
   setShellRegionSize,
   setShellRegionWidgetVisible,
@@ -36,6 +37,7 @@ export interface WorkbenchShellActions {
     presentation: ShellRegionPresentation,
     axis?: ShellRegionAxis
   ): void;
+  setShellRegionWidgetProportions(regionId: ShellRegionId, proportions: Record<string, number>): void;
   setShellRegionOpen(regionId: ShellRegionId, isOpen: boolean): void;
   setShellRegionVisible(regionId: ShellRegionId, isVisible: boolean): void;
   setShellRegionWidgetVisible(regionId: ShellRegionId, widgetId: string, isVisible: boolean): void;
@@ -93,6 +95,10 @@ export function createWorkbenchShellActions<TState extends WorkbenchShellActionS
         ...state,
         shell: setShellRegionArrangement(state.shell, regionId, presentation, axis)
       }));
+    },
+
+    setShellRegionWidgetProportions(regionId: ShellRegionId, proportions: Record<string, number>): void {
+      commitShellInteraction(state => ({ ...state, shell: setShellRegionWidgetProportions(state.shell, regionId, proportions) }));
     },
 
     setShellRegionOpen(regionId: ShellRegionId, isOpen: boolean): void {
