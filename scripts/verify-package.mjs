@@ -21,10 +21,10 @@ const cache = join(evidence, 'npm-cache');
 const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 
 assert.equal(manifest.name, '@konitif/workbench-runtime');
-assert.equal(manifest.version, '0.284.3');
+assert.equal(manifest.version, '0.284.4');
 assert.equal(manifest.private, false);
 assert.deepEqual(manifest.dependencies, {
-  '@konitif/workbench': '0.284.1',
+  '@konitif/workbench': '0.285.1',
   svelte: '^4.2.18',
 });
 
@@ -48,7 +48,7 @@ if (process.platform === 'win32') {
 const [packed] = JSON.parse(output);
 const files = packed.files.map(file => file.path).sort();
 assert.deepEqual(checkCompiledPackageFiles(files), { unexpected: [], missing: [] });
-assert.equal(files.length, 60);
+assert.equal(files.length, 64);
 
 const archive = join(evidence, packed.filename);
 const bytes = readFileSync(archive);
@@ -92,7 +92,9 @@ run(process.execPath, ['--input-type=module', '-e', `
   import { createWorkspace } from '@konitif/workbench/workspace-contracts';
   import { createWorkbenchStore } from '@konitif/workbench-runtime';
   import { createWorkbenchStoreRuntime } from '@konitif/workbench-runtime/runtime';
+  import { createCoherentWorkbenchStore } from '@konitif/workbench-runtime/runtime';
   assert.equal(typeof createWorkbenchStore, 'function');
+  assert.equal(typeof createCoherentWorkbenchStore, 'function');
   const workspace = createWorkspace();
   let saves = 0;
   let unsubscribes = 0;

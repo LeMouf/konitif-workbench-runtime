@@ -1,5 +1,7 @@
 // Explicit host assembly: no default browser providers are selected here.
 export { createWorkbenchStoreRuntime } from './workbench/createWorkbenchStoreRuntime';
+export * from './workbench/coherentWorkbenchPersistence';
+export * from './workbench/createCoherentWorkbenchStore';
 export type { CreateWorkbenchStoreRuntimeOptions } from './workbench/createWorkbenchStoreRuntime';
 export type { WorkbenchHostEvents, WorkbenchHostEventHandlers, WorkbenchHostStorageChange } from './workbench/workbenchHostEvents';
 export type { WorkbenchDetachedWindowHost, WorkbenchDetachedWindowOpening } from './workbench/workbenchDetachedWindowHost';

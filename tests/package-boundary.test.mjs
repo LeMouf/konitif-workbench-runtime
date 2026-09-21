@@ -12,7 +12,7 @@ test('manifest is public, compiled and independent from workspace locators', () 
   assert.equal(manifest.repository.url, 'git+https://github.com/LeMouf/konitif-workbench-runtime.git');
   assert.deepEqual(manifest.publishConfig, { access: 'public', registry: 'https://registry.npmjs.org/' });
   assert.deepEqual(manifest.dependencies, {
-    '@konitif/workbench': '0.284.1',
+    '@konitif/workbench': '0.285.1',
     svelte: '^4.2.18',
   });
   assert.equal(manifest.svelte, './dist/index.js');
@@ -37,7 +37,7 @@ test('sources contain no application or partner namespace', () => {
     }
   }
   walk(root);
-  assert.equal(files.length, 29);
+  assert.equal(files.length, 31);
   const privateProductPattern = /@maxtronics\/|packages\/maxtronics-|behavior-studio|Behavior Studio|\bapps\/|\bnao(?:qi)?\b|aldebaran|softbank/i;
   for (const file of files) {
     assert.doesNotMatch(readFileSync(file, 'utf8'), privateProductPattern, file);
