@@ -42,7 +42,7 @@
     "verify:package": "node scripts/verify-package.mjs"
   },
   "dependencies": {
-    "@konitif/workbench": "0.285.1",
+    "@konitif/workbench": "0.285.2",
     "svelte": "^4.2.18"
   },
   "devDependencies": {

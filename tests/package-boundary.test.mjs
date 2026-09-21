@@ -12,7 +12,7 @@ test('manifest is public, compiled and independent from workspace locators', () 
   assert.equal(manifest.repository.url, 'git+https://github.com/LeMouf/konitif-workbench-runtime.git');
   assert.deepEqual(manifest.publishConfig, { access: 'public', registry: 'https://registry.npmjs.org/' });
   assert.deepEqual(manifest.dependencies, {
-    '@konitif/workbench': '0.285.1',
+    '@konitif/workbench': '0.285.2',
     svelte: '^4.2.18',
   });
   assert.equal(manifest.svelte, './dist/index.js');
