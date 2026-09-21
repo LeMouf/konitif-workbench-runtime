@@ -24,7 +24,7 @@ assert.equal(manifest.name, '@konitif/workbench-runtime');
 assert.equal(manifest.version, '0.284.4');
 assert.equal(manifest.private, false);
 assert.deepEqual(manifest.dependencies, {
-  '@konitif/workbench': '0.285.1',
+  '@konitif/workbench': '0.285.2',
   svelte: '^4.2.18',
 });
 
