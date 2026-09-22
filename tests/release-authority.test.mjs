@@ -8,7 +8,7 @@ const json = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.u
 test('release identity names the independent repository', () => {
   const manifest = json('package.json');
   assert.equal(manifest.repository.url, 'git+https://github.com/LeMouf/konitif-workbench-runtime.git');
-  assert.equal(manifest.version, '0.284.3');
+  assert.equal(manifest.version, '0.284.4');
   assert.equal(manifest.license, 'PolyForm-Noncommercial-1.0.0');
 });
 
@@ -18,7 +18,7 @@ test('release inputs bind the exact package version to its repository and tag re
   const lock = json('package-lock.json');
   const base = {
     GITHUB_REPOSITORY: 'LeMouf/konitif-workbench-runtime',
-    GITHUB_REF: 'refs/tags/v0.284.3',
+    GITHUB_REF: 'refs/tags/v0.284.4',
   };
   assert.doesNotThrow(() => assertReleaseInputs(policy, manifest, lock, {
     ...base,
@@ -27,18 +27,18 @@ test('release inputs bind the exact package version to its repository and tag re
   assert.doesNotThrow(() => assertReleaseInputs(policy, manifest, lock, {
     ...base,
     GITHUB_EVENT_NAME: 'workflow_dispatch',
-    WORKBENCH_RUNTIME_RELEASE_TAG: 'v0.284.3',
+    WORKBENCH_RUNTIME_RELEASE_TAG: 'v0.284.4',
   }));
   assert.throws(() => assertReleaseInputs(policy, manifest, lock, {
     ...base,
     GITHUB_EVENT_NAME: 'workflow_dispatch',
-    WORKBENCH_RUNTIME_RELEASE_TAG: 'v0.284.2',
+    WORKBENCH_RUNTIME_RELEASE_TAG: 'v0.284.5',
   }));
   assert.throws(() => assertReleaseInputs(policy, manifest, lock, {
     ...base,
     GITHUB_EVENT_NAME: 'workflow_dispatch',
     GITHUB_REF: 'refs/heads/main',
-    WORKBENCH_RUNTIME_RELEASE_TAG: 'v0.284.3',
+    WORKBENCH_RUNTIME_RELEASE_TAG: 'v0.284.4',
   }));
 });
 

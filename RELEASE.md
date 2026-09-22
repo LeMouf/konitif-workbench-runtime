@@ -27,3 +27,10 @@ rejected.
 Never publish the source directory, an archive produced outside the verifier,
 Workbench itself, UI packages, application presets or partner code from this
 repository.
+
+## Coherent workspace usage
+
+Version `0.284.4` adds the generic coherent Workbench store and persistence
+adapter. It depends exactly on `@konitif/workbench@0.285.2`, which owns usage
+bundle identity and admission. The runtime remains a host adapter and does not
+own authored presets, storage or product conflict policy.

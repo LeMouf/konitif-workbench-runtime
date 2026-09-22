@@ -1,7 +1,7 @@
 {
   "name": "@konitif/workbench-runtime",
   "license": "PolyForm-Noncommercial-1.0.0",
-  "version": "0.284.3",
+  "version": "0.284.4",
   "description": "Reactive Svelte host adapter for KONITIF Workbench contracts with explicit runtime ports.",
   "repository": {
     "type": "git",
@@ -42,7 +42,7 @@
     "verify:package": "node scripts/verify-package.mjs"
   },
   "dependencies": {
-    "@konitif/workbench": "0.284.1",
+    "@konitif/workbench": "0.285.2",
     "svelte": "^4.2.18"
   },
   "devDependencies": {

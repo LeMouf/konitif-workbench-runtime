@@ -115,6 +115,13 @@ export function normalizePersistedShellState(
         const axis = persistedRegion.axis === 'horizontal' || persistedRegion.axis === 'vertical'
           ? persistedRegion.axis
           : fallbackRegion.axis;
+        const rawProportions = persistedRegion.widgetProportions;
+        const widgetProportions = rawProportions && typeof rawProportions === 'object' && !Array.isArray(rawProportions)
+          ? Object.fromEntries(nextWidgetIds.flatMap(id => {
+              const value = rawProportions[id];
+              return typeof value === 'number' && Number.isFinite(value) && value > 0 ? [[id, value]] : [];
+            }))
+          : fallbackRegion.widgetProportions;
         const visibleWidgetIds = nextWidgetIds.filter((widgetId) => !hiddenWidgetIds.includes(widgetId));
         const visibleActiveWidgetId = activeWidgetId && visibleWidgetIds.includes(activeWidgetId)
           ? activeWidgetId
@@ -135,6 +142,7 @@ export function normalizePersistedShellState(
             widgetIds: nextWidgetIds,
             hiddenWidgetIds,
             presentation,
+            widgetProportions,
             axis
           }
         ];

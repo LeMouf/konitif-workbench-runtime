@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 import { rewriteEmittedSpecifiers } from './workbench-esm-specifiers.mjs';
@@ -26,8 +26,15 @@ const program = ts.createProgram(entries.map(file => join(sourceRoot, file)), {
 });
 const files = new Map();
 const emitted = program.emit(undefined, (file, content) => {
-  assert.ok(file.startsWith(sourceRoot + '/'), `Package escape: ${file}`);
-  files.set(relative(sourceRoot, file).replaceAll('\\', '/'),
+  const emittedRelativePath = relative(sourceRoot, file);
+  assert.ok(
+    emittedRelativePath !== '..' &&
+      !emittedRelativePath.startsWith('../') &&
+      !emittedRelativePath.startsWith('..\\') &&
+      !isAbsolute(emittedRelativePath),
+    `Package escape: ${file}`
+  );
+  files.set(emittedRelativePath.replaceAll('\\', '/'),
     rewriteEmittedSpecifiers(content, file.replace(/(?:\.d)?\.ts$|\.js$/, '.ts')));
 });
 const diagnostics = [...ts.getPreEmitDiagnostics(program), ...emitted.diagnostics].map(diagnostic => ({

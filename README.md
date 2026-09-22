@@ -14,6 +14,7 @@ npm install @konitif/workbench-runtime
 - Reactive Workbench stores and shell actions.
 - Workspace history and synchronization controllers.
 - Explicit ports for persistence, host events and detached windows.
+- Admitted, content-addressed workspace usage persistence with explicit or boundary publication.
 - A runtime assembly entry that selects no browser providers by default.
 
 ## Authority boundary
@@ -22,6 +23,11 @@ This package adapts Workbench authorities; it does not redefine workspace
 semantics or own hosted tools, widgets, Viewers or domain policies. Supplied providers
 remain owned by their hosts. Runtime disposal removes subscriptions but does not
 implicitly flush persistence or close shared native resources.
+
+`createCoherentWorkbenchStore` restores only usage bundles admitted by the
+public Workbench authority, then publishes immutable occurrences through a
+host-supplied compare-and-swap port. Product storage and conflict policy remain
+outside this adapter.
 
 ## Quick start
 

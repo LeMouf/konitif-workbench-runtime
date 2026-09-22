@@ -1,4 +1,6 @@
 export * from './boot';
+export * from './workbench/coherentWorkbenchPersistence';
+export * from './workbench/createCoherentWorkbenchStore';
 export * from './workbench/createWorkbenchStore';
 export * from './workbench/createWorkspaceModeController';
 export * from './workbench/workbenchShellPersistence';
