@@ -20,7 +20,7 @@ npm install @konitif/workbench-runtime
 ## Authority boundary
 
 This package adapts Workbench authorities; it does not redefine workspace
-semantics or own product tools, widgets, Viewers or policies. Supplied providers
+semantics or own hosted tools, widgets, Viewers or domain policies. Supplied providers
 remain owned by their hosts. Runtime disposal removes subscriptions but does not
 implicitly flush persistence or close shared native resources.
 

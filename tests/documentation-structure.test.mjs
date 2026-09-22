@@ -6,6 +6,13 @@ const root = new URL('../', import.meta.url);
 const read = path => readFileSync(new URL(path, root), 'utf8');
 const manifest = JSON.parse(read('package.json'));
 const readme = read('README.md');
+const publicNarrative = [
+  manifest.description ?? '',
+  readme,
+  read('reference/README.md'),
+  read('reference/catalog.json'),
+  read('reference/diagrams.json'),
+].join('\n');
 
 test('consumer README follows the public documentation contract', () => {
   const headings = [
@@ -29,6 +36,8 @@ test('consumer README follows the public documentation contract', () => {
     /AGENTS\.md|npm ci|npm run (?:build|test|verify)|NPM_PUBLISH_ENABLED|Trusted Publish|release authority|not published yet|public distribution candidate/i,
   );
   assert.doesNotMatch(readme, /Maxtronics|Behavior Studio|\bNAO(?:qi)?\b|Aldebaran|SoftBank/i);
+  assert.doesNotMatch(publicNarrative, /Maxtronics|Behavior Studio|\bNAO(?:qi)?\b|Aldebaran|SoftBank|robot\.nao|\bDance\b|\bElephant\b/i);
+  assert.doesNotMatch(publicNarrative, /packages\/(?:workbench|konitif)-|config\/repositories\.json|link-[a-z-]+-development/i);
 });
 
 test('consumer, contributor, release and agent documents stay separate', () => {
