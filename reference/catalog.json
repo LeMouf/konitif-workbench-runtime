@@ -71,6 +71,11 @@
         "workbenchFocusPersistence.ts",
         "workspaceHistoryController.ts",
         "workspaceSyncController.ts"
+      ],
+      "symbolNames": [
+        "WorkbenchHostEventHandlers",
+        "WorkbenchHostEvents",
+        "WorkbenchHostStorageChange"
       ]
     }
   ]

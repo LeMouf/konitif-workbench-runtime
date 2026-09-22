@@ -4,8 +4,8 @@ This repository is the source and release authority for
 `@konitif/workbench-runtime`.
 
 The package adapts public Workbench contracts to Svelte stores and explicit
-host ports. It does not own Workbench workspace semantics, product tools,
-viewer projections or partner-specific behavior.
+host ports. It does not own Workbench workspace semantics, hosted tools,
+viewer projections or domain-specific behavior.
 
 Baseline dependencies:
 

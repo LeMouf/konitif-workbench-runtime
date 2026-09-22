@@ -13,5 +13,5 @@ npm test
 npm run verify:package
 ```
 
-Keep canonical Workbench semantics and product policy outside this adapter.
+Keep canonical Workbench semantics and domain policy outside this adapter.
 Follow `RELEASE.md` for publication.
