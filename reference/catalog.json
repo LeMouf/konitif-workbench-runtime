@@ -22,7 +22,8 @@
       ],
       "sources": [
         "createWorkbenchStore.ts",
-        "createWorkspaceModeController.ts"
+        "createWorkspaceModeController.ts",
+        "createCoherentWorkbenchStore.ts"
       ]
     },
     {
@@ -70,7 +71,8 @@
         "workbenchShellPersistence.ts",
         "workbenchFocusPersistence.ts",
         "workspaceHistoryController.ts",
-        "workspaceSyncController.ts"
+        "workspaceSyncController.ts",
+        "coherentWorkbenchPersistence.ts"
       ],
       "symbolNames": [
         "WorkbenchHostEventHandlers",
