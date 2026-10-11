@@ -21,7 +21,7 @@ const cache = join(evidence, 'npm-cache');
 const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 
 assert.equal(manifest.name, '@konitif/workbench-runtime');
-assert.equal(manifest.version, '0.284.4');
+assert.equal(manifest.version, '0.284.5');
 assert.equal(manifest.private, false);
 assert.deepEqual(manifest.dependencies, {
   '@konitif/workbench': '0.285.2',
