@@ -16,7 +16,7 @@ test('every emitted relative specifier targets explicit JavaScript', () => {
     }
   }
   walk(root);
-  assert.equal(files.length, 60);
+  assert.equal(files.length, 64);
   for (const file of files) {
     for (const imported of ts.preProcessFile(readFileSync(file, 'utf8')).importedFiles) {
       if (!imported.fileName.startsWith('.')) continue;
