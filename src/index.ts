@@ -10,3 +10,4 @@ export * from './workbench/workbenchToolRuntimeActions';
 export * from './workbench/workspaceHistoryController';
 export * from './workbench/workspaceSyncController';
 export type { WorkbenchHostEvents, WorkbenchHostEventHandlers, WorkbenchHostStorageChange } from './workbench/workbenchHostEvents';
+export * from './workbench/experienceTabLink';
