@@ -11,3 +11,5 @@ export * from './workbench/workspaceHistoryController';
 export * from './workbench/workspaceSyncController';
 export type { WorkbenchHostEvents, WorkbenchHostEventHandlers, WorkbenchHostStorageChange } from './workbench/workbenchHostEvents';
 export * from './workbench/experienceTabLink';
+export * from './workbench/workbenchLibraryFolderRepository';
+export * from './workbench/workbenchAudioLibraryClient';
