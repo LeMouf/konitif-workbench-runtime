@@ -8,3 +8,5 @@ export type { WorkbenchDetachedWindowHost, WorkbenchDetachedWindowOpening } from
 export type { WorkbenchShellPersistencePort } from './workbench/workbenchShellPersistence';
 export type { WorkbenchFocusPersistencePort } from './workbench/workbenchFocusPersistence';
 export type { WorkspaceSyncController, WorkspaceSyncSnapshot } from './workbench/workspaceSyncController';
+
+export type {WorkbenchInitializationObserver,WorkbenchInitializationEvent,WorkbenchInitializationDescriptor,WorkbenchInitializationInput} from './workbench/workbenchInitializationObservation';

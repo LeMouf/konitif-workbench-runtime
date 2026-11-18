@@ -57,6 +57,20 @@ events and detached-window providers must all be supplied explicitly. Call
 | `@konitif/workbench-runtime` | Existing store API and compatibility defaults. |
 | `@konitif/workbench-runtime/runtime` | Explicit six-port runtime assembly. |
 
+## Initialization observation
+
+Both factories accept an optional `initializationObserver`. It receives synchronous
+start, success and failure notifications for provider selection and runtime
+initialization. Notifications retain parent-operation identity and explicit
+prerequisites. Only executed branches are reported: reading an empty workspace
+provider and constructing a default workspace are distinct operations.
+
+The observer does not execute initialization or own workspace state. Its errors
+are isolated; runtime errors retain their original identity. Values and input
+references are passed without serialization. Consumers choose what to retain and
+must avoid exposing persisted contents in diagnostic output. Providers may handle
+invalid data internally, so an empty result does not establish its cause.
+
 ## Reference
 
 See [`reference/`](reference/) for the machine-readable capability catalog and

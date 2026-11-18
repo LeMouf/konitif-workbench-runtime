@@ -4,6 +4,7 @@ import {
   runToolShellCommand,
   setToolPanelTitleOverride,
   updateToolState,
+  patchWorkbenchToolDockVisibilityState,
   type JsonObject,
   type LayoutInteractionState,
   type ShellState,
@@ -47,6 +48,16 @@ export function createWorkbenchToolRuntimeActions<TState extends WorkbenchToolRu
   input: CreateWorkbenchToolRuntimeActionsInput<TState, TSnapshot>
 ): ToolRuntimeHostActions {
   return {
+    setToolDockVisibility(toolInstanceId,request){
+      let didUpdate=false;
+      input.updateWorkbenchState(state=>{
+        const instance=state.workspace.toolInstances[toolInstanceId];if(!instance)return state;
+        const nextState=patchWorkbenchToolDockVisibilityState(instance.state,request);
+        if(JSON.stringify(instance.state)===JSON.stringify(nextState))return state;
+        const nextWorkspace=updateToolState(state.workspace,{toolInstanceId,nextState});didUpdate=nextWorkspace!==state.workspace;
+        return didUpdate?input.createWorkbenchState(createWorkspaceSessionState(nextWorkspace,state.focus),state.shell,state.layoutInteraction):state;
+      },'app');return didUpdate;
+    },
     updateToolState(toolInstanceId: string, nextState: JsonObject): boolean {
       let didUpdate = false;
 

@@ -37,7 +37,7 @@ test('sources contain no application or partner namespace', () => {
     }
   }
   walk(root);
-  assert.equal(files.length, 34);
+  assert.equal(files.length, 35);
   const privateProductPattern = /@maxtronics\/|packages\/maxtronics-|behavior-studio|Behavior Studio|\bapps\/|\bnao(?:qi)?\b|aldebaran|softbank/i;
   for (const file of files) {
     assert.doesNotMatch(readFileSync(file, 'utf8'), privateProductPattern, file);
