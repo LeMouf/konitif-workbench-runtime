@@ -13,7 +13,7 @@ const entries = ['index.ts', 'runtime.ts'];
 const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 assert.equal(manifest.name, '@konitif/workbench-runtime');
 assert.equal(manifest.private, false);
-assert.deepEqual(Object.keys(manifest.exports), ['.', './runtime']);
+assert.deepEqual(Object.keys(manifest.exports), ['.', './runtime', './presence-server']);
 
 const program = ts.createProgram(entries.map(file => join(sourceRoot, file)), {
   target: ts.ScriptTarget.ES2022,
@@ -52,6 +52,10 @@ for (const [file, content] of files) {
     const target = relative(outputRoot, resolve(outputRoot, dirname(file), imported.fileName)).replaceAll('\\', '/');
     assert.ok(files.has(target), `Missing emitted target: ${target}`);
   }
+}
+
+for (const file of ['infrastructure/presence.mjs', 'infrastructure/presence.d.mts']) {
+  files.set(file, readFileSync(join(sourceRoot, file), 'utf8'));
 }
 
 rmSync(outputRoot, { recursive: true, force: true });

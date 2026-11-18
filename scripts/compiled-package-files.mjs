@@ -6,6 +6,8 @@ export function checkCompiledPackageFiles(files) {
     'reference/README.md',
     'reference/catalog.json',
     'reference/diagrams.json',
+    'dist/infrastructure/presence.mjs',
+    'dist/infrastructure/presence.d.mts',
   ];
   const unexpected = files.filter(file => !required.includes(file)
     && !/^dist\/(?!.*(?:^|\/)\.\.\/).+\.(?:js|d\.ts)$/.test(file));
