@@ -49,6 +49,26 @@
       ]
     },
     {
+      "id": "experience-screen-navigation",
+      "title": "Experience and screen navigation",
+      "summary": "Experience links and browser history projected through host-supplied screen actions.",
+      "authority": "The host admits experiences and owns screen activation.",
+      "owns": ["URL encoding", "navigation coordination"],
+      "doesNotOwn": ["experience identity", "experience admission", "workspace semantics"],
+      "workflow": ["Read the requested reference", "Ask the host to activate", "Update browser history"],
+      "sources": ["experienceTabLink.ts"]
+    },
+    {
+      "id": "resource-library-adapters",
+      "title": "Resource library adapters",
+      "summary": "Durable browser folder organization and an HTTP client for a host-owned audio library.",
+      "authority": "Workbench supplies folder semantics and the host owns resource storage and access.",
+      "owns": ["browser persistence adapter", "HTTP request and response adaptation"],
+      "doesNotOwn": ["canonical resource data", "resource access policy", "folder domain rules"],
+      "workflow": ["Read current state", "Apply the shared folder operation or request host data", "Report success or failure"],
+      "sources": ["workbenchLibraryFolderRepository.ts", "workbenchAudioLibraryClient.ts"]
+    },
+    {
       "id": "persistence-and-sync",
       "title": "Persistence and synchronization",
       "summary": "Restoration of layout, focus, and history.",
