@@ -21,7 +21,7 @@ const cache = join(evidence, 'npm-cache');
 const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 
 assert.equal(manifest.name, '@konitif/workbench-runtime');
-assert.equal(manifest.version, '0.284.7');
+assert.equal(manifest.version, '0.284.8');
 assert.equal(manifest.private, false);
 assert.deepEqual(manifest.dependencies, {
   '@konitif/workbench': '0.285.17',
@@ -48,7 +48,7 @@ if (process.platform === 'win32') {
 const [packed] = JSON.parse(output);
 const files = packed.files.map(file => file.path).sort();
 assert.deepEqual(checkCompiledPackageFiles(files), { unexpected: [], missing: [] });
-assert.equal(files.length, 70);
+assert.equal(files.length, 72);
 
 const archive = join(evidence, packed.filename);
 const bytes = readFileSync(archive);
